@@ -1,4 +1,4 @@
-package com.custom.config;
+package com.athena.code;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import software.amazon.awssdk.services.athena.model.QueryExecutionContext;
 import software.amazon.awssdk.services.athena.model.ResultConfiguration;
 
 @Configuration
-public class AthenaConfig {
+public class AwsAthenaConfig {
 
     @Value("${aws.region}")
     private String region;
@@ -24,32 +24,29 @@ public class AthenaConfig {
     private String secretKey;
 
     @Value("${aws.athena.database}")
-    private String database;
+    private String athenaDatabase;
 
-    @Value("${aws.athena.s3-out-put-location}")
+    @Value("${aws.athena.s3-output-location}")
     private String s3OutputLocation;
-
 
     @Bean
     public AthenaClient athenaClient() {
-        AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
         return AthenaClient.builder()
-            .region(Region.of(region))
-            .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
-            .build();
+                .region(Region.of(region))
+                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                .build();
     }
 
     @Bean
     public QueryExecutionContext queryExecutionContext() {
-        return QueryExecutionContext.builder()
-            .database(database)
-            .build();
+        return  QueryExecutionContext.builder().database(athenaDatabase).build();
     }
 
     @Bean
-    public ResultConfiguration resultConfiguration() {
+    public ResultConfiguration resultConfig(){
         return ResultConfiguration.builder()
-            .outputLocation(s3OutputLocation)
-            .build();
+                .outputLocation(s3OutputLocation)
+                .build();
     }
 }

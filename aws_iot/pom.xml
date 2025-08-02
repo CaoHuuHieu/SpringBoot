@@ -9,8 +9,8 @@
           <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.caohuuhieu</groupId>
-    <artifactId>athena</artifactId>
+    <groupId>com.custom</groupId>
+    <artifactId>aws_iot</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -20,10 +20,10 @@
 
     <dependencies>
         <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>athena</artifactId>
-            <version>2.26.0</version>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-iot-device-sdk-java</artifactId>
+            <version>1.3.9</version>
         </dependency>
     </dependencies>
-    
+
 </project>
